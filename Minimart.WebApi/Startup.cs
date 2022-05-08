@@ -10,6 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Minimart.Core.Domain.Services;
+using Minimart.Core.Services;
+using Minimart.Core.Persistence.Context;
+using Minimart.Core.Domain.Repositories;
+using Minimart.Core.Persistence.Repositories;
 
 namespace Minimart.WebApi
 {
@@ -26,6 +31,19 @@ namespace Minimart.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+
+            //Minimart Custom 
+            var connectionString = Configuration.GetConnectionString("SqlConnection");
+            services.AddSingleton(s => new DapperContext(connectionString));
+            services.AddScoped<IStoreService, StoreService>();
+            services.AddScoped<IStoreRepository, StoreRepository>();
+
+            //Replace json serializer to avoid circular ref error
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

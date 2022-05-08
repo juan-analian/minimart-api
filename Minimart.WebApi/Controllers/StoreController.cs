@@ -27,19 +27,15 @@ namespace Minimart.WebApi.Controllers
         //Todo! GET ? atHour=13 & onWeekdat=2
         [Description("Gets Stores. You can query at specific hour and/or weekday")]
         [HttpGet()]
-        //[ProducesResponseType(typeof(Cart), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult GetCart(
-            [Description("Id of the cart.")]
-            [FromRoute]Guid? cartId)
+        //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.OK)]
+        //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.InternalServerError)]
+        //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetStores( 
+            [Description("Get stores Opeded at this hour of the day")] [FromQuery] int? atHour,
+            [Description("Get stores Opeded in this weekday")][FromQuery] byte? weekDay )
         {
-            if (cartId == null)
-                return BadRequest("No cart id specified");
-
-            var cart = cartRepository.GetCart(cartId.Value);
-
-            return Ok(cart);
+            
+            return Ok( await _storeService.ListAsync());
         }
     }
 }

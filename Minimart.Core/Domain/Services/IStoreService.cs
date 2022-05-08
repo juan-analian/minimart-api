@@ -6,6 +6,6 @@ namespace Minimart.Core.Domain.Services
 {
     public interface IStoreService
     {
-        Task<IEnumerable<Category>> ListAsync();
+        Task<IEnumerable<Store>> ListAsync();
     }
 }
