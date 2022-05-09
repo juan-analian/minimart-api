@@ -16,12 +16,12 @@ namespace Minimart.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StoreController : ControllerBase
+    public class StoresController : ControllerBase
     {
         private readonly IStoreService _storeService;
         private readonly IMapper _mapper;
 
-        public StoreController(IStoreService storeService, IMapper mapper)
+        public StoresController(IStoreService storeService, IMapper mapper)
         {
             this._storeService = storeService;
             this._mapper = mapper;
