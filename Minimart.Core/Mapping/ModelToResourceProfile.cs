@@ -18,6 +18,8 @@ namespace Minimart.Core.Mapping
                 .ForMember(x => x.To, opt => opt.MapFrom(src => src.To.ToString("HH:mm")))
                 .ForMember(x => x.WeekDay, opt => opt.MapFrom(src => Enum.GetName(typeof(EWeekDays), src.WeekDay)));
 
+
+            CreateMap<Product, ProductResource>();
         }
     }
 }

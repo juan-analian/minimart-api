@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Minimart.Core.Domain.Repositories
 {
-    public interface IStoreRepository
-    {        
-        public Task<IEnumerable<Store>> GetStores(int? hour, byte? weekday); 
+    public interface IProductRepository
+    {
+        public Task<List<Product>> GetProducts();
     }
 }
