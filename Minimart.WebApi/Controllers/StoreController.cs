@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Net;
 
 using System.ComponentModel;
+using AutoMapper;
+using Minimart.Core.Domain.Models;
+using Minimart.Core.Resources;
 
 namespace Minimart.WebApi.Controllers
 {
@@ -16,10 +19,12 @@ namespace Minimart.WebApi.Controllers
     public class StoreController : ControllerBase
     {
         private readonly IStoreService _storeService;
+        private readonly IMapper _mapper;
 
-        public StoreController(IStoreService storeService)
+        public StoreController(IStoreService storeService, IMapper mapper)
         {
             this._storeService = storeService;
+            this._mapper = mapper;
         }
 
 
@@ -28,14 +33,25 @@ namespace Minimart.WebApi.Controllers
         [Description("Gets Stores. You can query at specific hour and/or weekday")]
         [HttpGet()]
         //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.InternalServerError)]
-        //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.BadRequest)]
+        //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.InternalServerError)]        
         public async Task<IActionResult> GetStores( 
             [Description("Get stores Opeded at this hour of the day")] [FromQuery] int? atHour,
             [Description("Get stores Opeded in this weekday")][FromQuery] byte? weekDay )
         {
+            try
+            {
+                var stores = await _storeService.ListAsync(atHour, weekDay);
+                var resources = _mapper.Map<IEnumerable<Store>, IEnumerable<StoreResource>>(stores);
+
+                //return Ok(stores);
+                return Ok(resources);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
             
-            return Ok( await _storeService.ListAsync());
         }
     }
 }

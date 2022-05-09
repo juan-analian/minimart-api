@@ -15,6 +15,8 @@ using Minimart.Core.Services;
 using Minimart.Core.Persistence.Context;
 using Minimart.Core.Domain.Repositories;
 using Minimart.Core.Persistence.Repositories;
+using AutoMapper;
+using Minimart.Core.Mapping;
 
 namespace Minimart.WebApi
 {
@@ -39,11 +41,8 @@ namespace Minimart.WebApi
             services.AddScoped<IStoreService, StoreService>();
             services.AddScoped<IStoreRepository, StoreRepository>();
 
-            //Replace json serializer to avoid circular ref error
-            services.AddControllers().AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
+            services.AddAutoMapper(typeof(ModelToResourceProfile));
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,5 +12,12 @@ namespace Minimart.Core.Domain.Services.Communication
         public bool UnhandledException { get; protected set; }
         public string Message { get; protected set; }
 
+
+        public BaseResponse(bool succes, bool unhandledException, string message)
+        {
+            Success = succes;
+            UnhandledException = unhandledException;
+            Message = message;
+        }
     }
 }
