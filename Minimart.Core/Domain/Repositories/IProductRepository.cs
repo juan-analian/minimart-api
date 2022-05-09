@@ -10,6 +10,10 @@ namespace Minimart.Core.Domain.Repositories
     {
         public Task<List<Product>> GetProducts();
 
+        public Task<List<Product>> GetProductsByStoreId(int storeId);
+
         public Task<Product> FindById(int id);
+
+        public Task<Product> FindByIdAndStore(int id, int storeId);
     }
 }

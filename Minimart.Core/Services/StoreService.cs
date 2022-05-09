@@ -17,7 +17,11 @@ namespace Minimart.Core.Services
             this._storeRepository = storeRepository;
         }
 
-    
+        public async Task<Store> FindById(int id)
+        {
+            return await _storeRepository.FindById(id);
+        }
+
         public async Task<IEnumerable<Store>> ListAsync(int? hour, byte? weekday)
         {
             return await _storeRepository.GetStores(hour, weekday);

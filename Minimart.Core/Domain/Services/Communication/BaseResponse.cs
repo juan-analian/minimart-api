@@ -4,20 +4,27 @@ using System.Text;
 
 namespace Minimart.Core.Domain.Services.Communication
 {
-    public abstract class BaseResponse
+    public abstract class BaseResponse<T>
     {
         public bool Success { get; protected set; }
-        
-        //if the message is set in a catch block, we can response with a 500 status code
-        public bool UnhandledException { get; protected set; }
+
         public string Message { get; protected set; }
 
+        public T Resource { get; private set; }
 
-        public BaseResponse(bool succes, bool unhandledException, string message)
+
+        protected BaseResponse(string message)
         {
-            Success = succes;
-            UnhandledException = unhandledException;
+            Success = true;
             Message = message;
+            Resource = default;
+        }
+
+        protected BaseResponse(T resource)
+        {
+            Success = true;
+            Message = string.Empty;
+            Resource = resource;
         }
     }
 }

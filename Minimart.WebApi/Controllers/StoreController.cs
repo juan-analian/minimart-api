@@ -29,14 +29,14 @@ namespace Minimart.WebApi.Controllers
 
 
 
-        //Todo! GET ? atHour=13 & onWeekdat=2
+        //(1) Be able to query available stores at a certain time in the day and return only those that apply
         [Description("Gets Stores. You can query at specific hour and/or weekday")]
         [HttpGet()]
         //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.OK)]
         //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.InternalServerError)]        
         public async Task<IActionResult> GetStores( 
-            [Description("Get stores Opeded at this hour of the day")] [FromQuery] int? atHour,
-            [Description("Get stores Opeded in this weekday")][FromQuery] byte? weekDay )
+            [Description("Get stores opeded at this hour of the day (from 0 to 23)")] [FromQuery] int? atHour,
+            [Description("Get stores opeded in this weekday (1=monday to 7=sunday)")][FromQuery] byte? weekDay )
         {
             try
             {
