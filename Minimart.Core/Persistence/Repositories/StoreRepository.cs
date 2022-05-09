@@ -57,6 +57,17 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
+
+        public async Task<Store> FindById(int id)
+        {
+            var query = "SELECT * FROM Store WHERE Id = @storeId";
+            using (var connection = _context.CreateConnection())
+            {
+                var store  = await connection.QuerySingleOrDefaultAsync<Store>(query, new { storeId=id});
+                return store;
+            }
+        }
+
         public async Task<IEnumerable<Store>> GetStoresOnly()
         {
             var query = "SELECT * FROM Store";

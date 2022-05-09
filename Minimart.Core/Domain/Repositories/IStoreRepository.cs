@@ -8,6 +8,7 @@ namespace Minimart.Core.Domain.Repositories
 {
     public interface IStoreRepository
     {        
-        public Task<IEnumerable<Store>> GetStores(int? hour, byte? weekday); 
+        public Task<IEnumerable<Store>> GetStores(int? hour, byte? weekday);
+        public Task<Store> FindById(int id);
     }
 }

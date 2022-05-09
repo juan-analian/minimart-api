@@ -22,8 +22,7 @@ namespace Minimart.Core.Persistence.Repositories
             var query = @"select p.Id, p.Name, p.Price, SUM(isnull(s.Quantity,0)) as Stock, p.CategoryId, c.Id, c.Name
                         from Product p
                         join Category c on p.CategoryId = c.Id
-                        left
-                        join Stock s on p.Id = s.ProductId
+                        left join Stock s on p.Id = s.ProductId
                         group by p.Id, p.Name, p.price, p.CategoryId, c.Id, c.Name";
             using (var connection = _context.CreateConnection())
             {
@@ -44,6 +43,16 @@ namespace Minimart.Core.Persistence.Repositories
 
 
                 return stores.Distinct().ToList();
+            }
+        }
+
+        public async Task<Product> FindById(int id)
+        {
+            var query = "SELECT * FROM Product WHERE Id = @productId";
+            using (var connection = _context.CreateConnection())
+            {
+                var product = await connection.QuerySingleOrDefaultAsync<Product>(query, new { productId = id });
+                return product;
             }
         }
     }

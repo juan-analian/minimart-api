@@ -9,5 +9,7 @@ namespace Minimart.Core.Domain.Repositories
     public interface IProductRepository
     {
         public Task<List<Product>> GetProducts();
+
+        public Task<Product> FindById(int id);
     }
 }
