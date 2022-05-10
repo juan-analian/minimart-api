@@ -8,7 +8,7 @@ namespace Minimart.Core.Domain.Models
     {
         public string Id { get; set; }
         public int StoreId { get; set; }
-        public byte VoucherDiscountTypeId { get; set; }
+        public EnumVoucherType VoucherDiscountTypeId { get; set; }
          
         public int? ValidFromDay { get; set; }
         public int? ValidFromMonth { get; set; }
