@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Minimart.Core.Domain.Logic;
+ 
+using Minimart.Core.Domain.Models;
 
 namespace Minimart.Core.Services
 {
@@ -127,13 +130,39 @@ namespace Minimart.Core.Services
             if (cart.VoucherId != string.Empty)
             {
                 var voucher =await _voucherRepository.Get(cart.VoucherId);
+               
+                IDiscountStrategy strategy;
+                switch (voucher.VoucherDiscountTypeId)
+                {
+                    case EnumVoucherType.DiscountOnProducts:
+                        strategy = new DiscountPerProduct(voucher);
+                        break;
+                    case EnumVoucherType.DiscountOnCategories:
+                        strategy = new DiscountPerCategory(voucher);
+                        break;
+                    case EnumVoucherType.DiscountOnNthOrderUnit:
+                        strategy = new DiscountOnOrder(voucher);
+                        break;
+                    case EnumVoucherType.DiscountPayNTakeM:
+                        strategy = new DiscountPayNTakeM(voucher);
+                        break;
+                    default:
+                        strategy = null;
+                        break;
+                }
 
-                //apply rules!
-                var pepe = 1;
-                //var newCart = alguien.queLoProcese(cart, voucher);
+                //assign the right logig
+                var context = new DiscountContext(strategy);
+
+                //execute the discount logic
+                return new CartResponse(context.CalculateDiscount(cart, simulateDate));
+                
+            }
+            else
+            {
+                return new CartResponse(cart);
             }
 
-            return new CartResponse(cart);
 
         }
     }
