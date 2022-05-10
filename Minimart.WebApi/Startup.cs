@@ -38,11 +38,15 @@ namespace Minimart.WebApi
             //Minimart Custom 
             var connectionString = Configuration.GetConnectionString("SqlConnection");
             services.AddSingleton(s => new DapperContext(connectionString));
+            
             services.AddScoped<IStoreService, StoreService>();
             services.AddScoped<IStoreRepository, StoreRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<ICartService, CartService>();
+            services.AddScoped<ICartRepository, CartRepository>();
 
             services.AddAutoMapper(typeof(ModelToResourceProfile));
            

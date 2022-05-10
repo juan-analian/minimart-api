@@ -20,6 +20,9 @@ namespace Minimart.Core.Mapping
 
 
             CreateMap<Product, ProductResource>();
+
+
+
         }
     }
 }

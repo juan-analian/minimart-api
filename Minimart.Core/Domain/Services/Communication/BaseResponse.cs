@@ -15,7 +15,7 @@ namespace Minimart.Core.Domain.Services.Communication
 
         protected BaseResponse(string message)
         {
-            Success = true;
+            Success = false;
             Message = message;
             Resource = default;
         }
