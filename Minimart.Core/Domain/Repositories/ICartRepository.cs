@@ -11,5 +11,7 @@ namespace Minimart.Core.Domain.Repositories
         public Task<Guid> Create(int storeId, int productId, int quantity);
         public Task AddOrUpdateItem(Guid cartId, int productId, int quantity); 
         public Task<Cart> FindById(Guid id);
+        public Task<CartItem> FindItemByProductId(Guid id, int productId);
+        public Task RemoveItem(Guid cartId, int productId);
     }
 }

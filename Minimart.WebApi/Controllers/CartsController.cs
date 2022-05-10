@@ -61,5 +61,20 @@ namespace Minimart.WebApi.Controllers
 
             return Ok(new { Guid = result.Resource });
         }
+
+
+        [HttpDelete("{id:guid}/items/{productId:int}")]
+        public async Task<IActionResult> RemoveItem( [FromRoute] Guid id, [FromRoute] int productId)
+        {
+            
+            var result = await _cartService.RemoveItem(id, productId);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return NoContent();
+        }
+
+
     }
 }

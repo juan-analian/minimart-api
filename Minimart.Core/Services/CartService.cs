@@ -65,5 +65,24 @@ namespace Minimart.Core.Services
             return new NewCartResponse(id);
 
         }
+
+        public async Task<NewCartResponse> RemoveItem(Guid cartId, int productId)
+        {
+            //Find Cart  
+            var cart = await _cartRepository.FindById(cartId);
+            if (cart == null)
+                return new NewCartResponse($"CartId: '{cartId}' not found");
+
+            //check if the product is in the item lists
+            var cartItem = await _cartRepository.FindItemByProductId(cartId, productId);
+            if (cartItem == null)
+                return new NewCartResponse($"ProductId: '{cartId}' not found in cartId: '{cartId}'");
+
+            //remove the item for this product.
+            await _cartRepository.RemoveItem(cartId, productId);
+
+            return new NewCartResponse(cartId);
+
+        }
     }
 }

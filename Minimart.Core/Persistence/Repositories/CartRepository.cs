@@ -61,7 +61,6 @@ namespace Minimart.Core.Persistence.Repositories
             return guid;
         }
 
-
         public async Task AddOrUpdateItem(Guid cartId, int productId, int quantity)
         {
             var procedureName = "dbo.CartItemAdd";
@@ -89,6 +88,28 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
+        public async Task<CartItem> FindItemByProductId(Guid id, int productId)
+        {
+            var query = "SELECT * FROM [dbo].[CartItem] WHERE [CartId] = @guid and [ProductId] = @productId";
+            using (var connection = _context.CreateConnection())
+            {
+                var cartItem = await connection.QuerySingleOrDefaultAsync<CartItem>(query, new { guid=id, productId });
+                return cartItem;
+            }
+        }
 
+        public async Task RemoveItem(Guid cartId, int productId )
+        {
+            var procedureName = "dbo.CartItemRemove";
+            var parameters = new DynamicParameters();
+            parameters.Add("guid", cartId, DbType.Guid, ParameterDirection.Input);
+            parameters.Add("productId", productId, DbType.Int32, ParameterDirection.Input);             
+
+            using (var connection = _context.CreateConnection())
+            {
+                var cantidad = await connection.ExecuteAsync(procedureName, parameters, commandType: CommandType.StoredProcedure);               
+            }
+
+        }
     }
 }
