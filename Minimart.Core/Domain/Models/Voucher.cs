@@ -10,16 +10,12 @@ namespace Minimart.Core.Domain.Models
         public int StoreId { get; set; }
         public byte VoucherDiscountTypeId { get; set; }
          
-        public byte? ValidFromDay { get; set; }
-        public byte? ValidFromMonth { get; set; }
-        public Int16 ValidFromYear { get; set; }
-        public byte? ValidTomDay { get; set; }
-        public byte? ValidTomMonth { get; set; }
-        public Int16 ValidTomYear { get; set; }
-
-
-        public DateTime ValidFrom { get; set; }
-        public DateTime ValidTo { get; set; }
+        public int? ValidFromDay { get; set; }
+        public int? ValidFromMonth { get; set; }
+        public int? ValidFromYear { get; set; }
+        public int? ValidToDay { get; set; }
+        public int? ValidToMonth { get; set; }
+        public int? ValidToYear { get; set; }
 
         public int? Percent { get; set; }
         public int? UpToUnit { get; set; }
@@ -27,5 +23,9 @@ namespace Minimart.Core.Domain.Models
         public int? TakeUnits { get; set; }
         public int? PayUnits { get; set; }
 
+        public List<VoucherIncludeCategory> Categories { get; set; } = new List<VoucherIncludeCategory>();
+        public List<VoucherIncludeProduct> IncludedProducts { get; set; } = new List<VoucherIncludeProduct>();
+        public List<VoucherExcludeProduct> ExcludedProducts { get; set; } = new List<VoucherExcludeProduct>();
+        public List<VoucherWeekDay> WeekDays { get; set; } = new List<VoucherWeekDay>();
     }
 }

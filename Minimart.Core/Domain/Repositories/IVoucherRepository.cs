@@ -9,5 +9,7 @@ namespace Minimart.Core.Domain.Repositories
     public interface IVoucherRepository
     {
         public Task<Voucher> FindById(string id);
+
+        public Task<Voucher> Get(string id);
     }
 }

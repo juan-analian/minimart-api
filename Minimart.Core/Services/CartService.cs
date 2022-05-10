@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Minimart.Core.Services
 {
@@ -115,7 +116,22 @@ namespace Minimart.Core.Services
             if (cart == null)
                 return new CartResponse($"CartId: '{cartId}' not found");
 
+            //calculate items amount ( p * q )
+            cart.items.ForEach(i => i.Total = i.Quantity * i.Product.Price);
             
+            //calculate cart total amount
+            cart.Total = cart.items.Sum(i => i.Total);
+
+
+            //3th: calculate discount if it has a voucher asociated.
+            if (cart.VoucherId != string.Empty)
+            {
+                var voucher =await _voucherRepository.Get(cart.VoucherId);
+
+                //apply rules!
+                var pepe = 1;
+                //var newCart = alguien.queLoProcese(cart, voucher);
+            }
 
             return new CartResponse(cart);
 
