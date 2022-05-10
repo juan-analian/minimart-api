@@ -108,7 +108,7 @@ namespace Minimart.Core.Services
         }
 
 
-        public async Task<CartResponse> GetCart(Guid cartId)
+        public async Task<CartResponse> GetCart(Guid cartId, DateTime? simulateDate = null  )
         {
              
             //1st: load al properties

@@ -127,7 +127,8 @@ namespace Minimart.WebApi.Controllers
         {
             try
             {
-                var result = await _cartService.GetCart(id);
+                //the second parameter is for simulate a day where the voucher is valid. Just for testing purpouse.
+                var result = await _cartService.GetCart(id, null);
 
                 if (!result.Success)
                     return BadRequest(result.Message);
