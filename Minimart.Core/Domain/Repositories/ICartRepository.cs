@@ -8,9 +8,8 @@ namespace Minimart.Core.Domain.Repositories
 {
     public interface ICartRepository
     {
-
         public Task<Guid> Create(int storeId, int productId, int quantity);
-        public Task<bool> Exists(Guid id);
+        public Task AddOrUpdateItem(Guid cartId, int productId, int quantity); 
         public Task<Cart> FindById(Guid id);
     }
 }

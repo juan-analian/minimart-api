@@ -46,5 +46,20 @@ namespace Minimart.WebApi.Controllers
 
             return Ok(new { Guid = result.Resource });
         }
+
+
+        [HttpPost("{id:guid}")]
+        public async Task<IActionResult> AddItem([FromBody] CartItemResource item, [FromRoute] Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var result = await _cartService.AddItem(id, item.ProductId, item.Quantity);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok(new { Guid = result.Resource });
+        }
     }
 }

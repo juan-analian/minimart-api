@@ -21,6 +21,28 @@ namespace Minimart.Core.Services
             this._cartRepository = cartRepository;
         }
 
+        public async Task<NewCartResponse> AddItem(Guid cartId, int productId, int quantity)
+        {
+            //Find Cart Header to get the StoreId
+            var cart = await _cartRepository.FindById(cartId);
+            if (cart == null)
+                return new NewCartResponse($"CartId: '{cartId}' not found");
+
+            //Find product By ID in a specific Store.
+            var product = await _productRepository.FindByIdAndStore(productId, cart.StoreId);
+            if (product == null)
+                return new NewCartResponse($"ProductId: {productId} not found");
+
+            //check the store has stock
+            if (product.Stock < quantity)
+                return new NewCartResponse($"Insuficient stock fro ProductId: {productId}. Available: {product.Stock}");
+
+            //update stock and insert item (in a transaction)
+            await _cartRepository.AddOrUpdateItem(cartId, productId, quantity);
+            return new NewCartResponse(cartId);
+                
+        }
+
         public async Task<NewCartResponse> Create(int storeId, int productId, int quantity)
         {
             //find Store By ID

@@ -61,21 +61,34 @@ namespace Minimart.Core.Persistence.Repositories
             return guid;
         }
 
-        public async Task<bool> Exists(Guid id)
-        {
-            var query = @"if exists (SELECT top 1 1 FROM Cart where Id = @id)
-                            select(1) as exist
-                          else
-                            select(0) as exist";
 
-            using (var connection = _context.CreateConnection())             
-            return await connection.ExecuteScalarAsync<bool>(query, new { storeId = id });
-                            
+        public async Task AddOrUpdateItem(Guid cartId, int productId, int quantity)
+        {
+            var procedureName = "dbo.CartItemAdd";
+            var parameters = new DynamicParameters();
+            parameters.Add("guid", cartId, DbType.Guid , ParameterDirection.Input);
+            parameters.Add("productId", productId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("quantity", quantity, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("now", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
+
+            using (var connection = _context.CreateConnection())
+            {
+                var cantidad = await connection.ExecuteAsync(procedureName, parameters, commandType: CommandType.StoredProcedure);
+                
+            }
+             
         }
 
-        public Task<Cart> FindById(Guid id)
+        public async Task<Cart> FindById(Guid id)
         {
-            throw new NotImplementedException();
+            var query = "SELECT * FROM Cart WHERE [Id] = @storeId";
+            using (var connection = _context.CreateConnection())
+            {
+                var cart = await connection.QuerySingleOrDefaultAsync<Cart>(query, new { storeId = id });
+                return cart;
+            }
         }
+
+
     }
 }
