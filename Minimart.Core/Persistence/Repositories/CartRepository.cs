@@ -81,10 +81,10 @@ namespace Minimart.Core.Persistence.Repositories
 
         public async Task<Cart> FindById(Guid id)
         {
-            var query = "SELECT * FROM Cart WHERE [Id] = @storeId";
+            var query = "SELECT * FROM Cart WHERE [Id] = @guid";
             using (var connection = _context.CreateConnection())
             {
-                var cart = await connection.QuerySingleOrDefaultAsync<Cart>(query, new { storeId = id });
+                var cart = await connection.QuerySingleOrDefaultAsync<Cart>(query, new { guid = id });
                 return cart;
             }
         }
@@ -131,7 +131,12 @@ namespace Minimart.Core.Persistence.Repositories
         //load full object with related objects an collections
         public async Task<Cart> GetCart(Guid id)
         {
-            var query = @"select * from Cart c 
+            var query = @"select 
+                            c.[Id],c.[StoreId],c.[CreatedAt],c.[VoucherId] ,
+                            s.Id, s.Name, 
+                            i.Id, i.CartId, i.ProductId, p.CategoryId, i.Quantity, i.CreatedAt,
+                            p.Id, p.Name, p.Price , p.CategoryId
+                        from Cart c 
                         join Store s on c.StoreId = s.Id
                         join CartItem i on c.Id = i.CartId 
                         join Product p on i.ProductId = p.Id
