@@ -132,8 +132,8 @@ namespace Minimart.WebApi.Controllers
                 if (!result.Success)
                     return BadRequest(result.Message);
 
-                
-                return Ok(result.Resource);
+                var resource = _mapper.Map<Cart, CartResource>(result.Resource);
+                return Ok(resource);
             }
             catch (Exception ex)
             {
