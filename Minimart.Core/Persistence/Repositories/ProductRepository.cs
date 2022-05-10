@@ -57,7 +57,7 @@ namespace Minimart.Core.Persistence.Repositories
             {
                 var productDict = new Dictionary<int, Product>();
 
-                var stores = await connection.QueryAsync<Product, Category, Product>(
+                var products = await connection.QueryAsync<Product, Category, Product>(
                     query, (product, category) =>
                     {
                         if (!productDict.TryGetValue(product.Id, out var currentProduct))
@@ -71,7 +71,7 @@ namespace Minimart.Core.Persistence.Repositories
                 );
 
 
-                return stores.Distinct().ToList();
+                return products.Distinct().ToList();
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Minimart.Core.Domain.Models;
 using Minimart.Core.Domain.Services;
 using Minimart.Core.Resources;
 using Minimart.WebApi.Extensions;
@@ -31,7 +32,7 @@ namespace Minimart.WebApi.Controllers
         //TODO!: unify return type for all methdods
 
         [HttpPost()]
-        public async Task<IActionResult> AddNewCart([FromBody] CartItemResource item, [FromHeader] int storeId)
+        public async Task<IActionResult> AddNewCart([FromBody] CartItemSaveResource item, [FromHeader] int storeId)
         {
 
             try
@@ -58,7 +59,7 @@ namespace Minimart.WebApi.Controllers
 
 
         [HttpPost("{id:guid}")]
-        public async Task<IActionResult> AddItem([FromBody] CartItemResource item, [FromRoute] Guid id)
+        public async Task<IActionResult> AddItem([FromBody] CartItemSaveResource item, [FromRoute] Guid id)
         {
             try
             {
@@ -120,5 +121,25 @@ namespace Minimart.WebApi.Controllers
         }
 
 
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetCart([FromRoute] Guid id)
+        {
+            try
+            {
+                var result = await _cartService.GetCart(id);
+
+                if (!result.Success)
+                    return BadRequest(result.Message);
+
+                
+                return Ok(result.Resource);
+            }
+            catch (Exception ex)
+            {
+                //TODO!: log the ex.Message
+                return StatusCode(500, "Internal error!");
+            }
+        }
     }
 }

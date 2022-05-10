@@ -1,6 +1,7 @@
 ﻿using Minimart.Core.Domain.Repositories;
 using Minimart.Core.Domain.Services;
 using Minimart.Core.Domain.Services.Communication;
+using Minimart.Core.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -98,10 +99,25 @@ namespace Minimart.Core.Services
             if (cartItem == null)
                 return new NewCartResponse($"ProductId: '{cartId}' not found in cartId: '{cartId}'");
 
-            //remove the item for this product.
+            //remove the item for this product and restore the stock!
             await _cartRepository.RemoveItem(cartId, productId);
 
             return new NewCartResponse(cartId);
+
+        }
+
+
+        public async Task<CartResponse> GetCart(Guid cartId)
+        {
+             
+            //1st: load al properties
+            var cart = await _cartRepository.GetCart(cartId);
+            if (cart == null)
+                return new CartResponse($"CartId: '{cartId}' not found");
+
+            
+
+            return new CartResponse(cart);
 
         }
     }

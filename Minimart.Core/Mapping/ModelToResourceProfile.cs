@@ -13,6 +13,7 @@ namespace Minimart.Core.Mapping
         {
             CreateMap<Store, StoreResource>();
 
+
             CreateMap<StoreOpenDay, StoreOpenDaysResource>()
                 .ForMember(x => x.From, opt => opt.MapFrom(src => src.From.ToString("HH:mm")))
                 .ForMember(x => x.To, opt => opt.MapFrom(src => src.To.ToString("HH:mm")))
@@ -21,8 +22,11 @@ namespace Minimart.Core.Mapping
 
             CreateMap<Product, ProductResource>();
 
-
-
+            //cart
+            CreateMap<Cart, CartResource>();
+            CreateMap<Store, CartStoreResource>();
+            CreateMap<CartItem, CartItemResource>();
+            CreateMap<Product, ProductItemResource>();
         }
     }
 }

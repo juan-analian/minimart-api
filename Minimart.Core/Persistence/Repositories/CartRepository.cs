@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using System.Data;
+using System.Linq;
 
 namespace Minimart.Core.Persistence.Repositories
 {
@@ -90,7 +91,9 @@ namespace Minimart.Core.Persistence.Repositories
 
         public async Task<CartItem> FindItemByProductId(Guid id, int productId)
         {
-            var query = "SELECT * FROM [dbo].[CartItem] WHERE [CartId] = @guid and [ProductId] = @productId";
+            //var query = "SELECT * FROM [dbo].[CartItem] WHERE [CartId] = @guid and [ProductId] = @productId";
+            var query = @"SELECT i.*, p.Price FROM [dbo].[CartItem] i JOIN [dbo].[Product] p on i.ProductId = p.Id
+                          WHERE [CartId] = @guid and [ProductId] = @productId ";
             using (var connection = _context.CreateConnection())
             {
                 var cartItem = await connection.QuerySingleOrDefaultAsync<CartItem>(query, new { guid=id, productId });
@@ -123,6 +126,41 @@ namespace Minimart.Core.Persistence.Repositories
             {
                 await connection.ExecuteAsync(query, parameters);
             }
+        }
+
+        //load full object with related objects an collections
+        public async Task<Cart> GetCart(Guid id)
+        {
+            var query = @"select * from Cart c 
+                        join Store s on c.StoreId = s.Id
+                        join CartItem i on c.Id = i.CartId 
+                        join Product p on i.ProductId = p.Id
+                        where c.Id = @guid ";
+             
+
+                using (var connection = _context.CreateConnection())
+                {
+
+                    var cartDict = new Dictionary<Guid, Cart>();
+
+                    var cart = await connection.QueryAsync<Cart, Store, CartItem, Product, Cart>(
+                        query, (cart, store, item, product) =>
+                        {
+                            if (!cartDict.TryGetValue(cart.Id, out var currentcart))
+                            {
+                                currentcart = cart;
+                                cartDict.Add(currentcart.Id, currentcart);
+                            }
+
+                            currentcart.Store = store;
+                            item.Product = product;
+                            currentcart.items.Add( item);
+                            return currentcart;
+                        }, new { guid = id }
+                    );
+
+                    return cart.Distinct().SingleOrDefault(); 
+                }
         }
     }
 }

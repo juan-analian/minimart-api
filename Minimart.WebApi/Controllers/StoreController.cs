@@ -27,7 +27,7 @@ namespace Minimart.WebApi.Controllers
             this._mapper = mapper;
         }
 
-
+        //TODO!: unify return type for all methdods
 
         //(1) Be able to query available stores at a certain time in the day and return only those that apply
         [Description("Gets Stores. You can query at specific hour and/or weekday")]

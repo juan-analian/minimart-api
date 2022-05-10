@@ -26,6 +26,8 @@ namespace Minimart.WebApi.Controllers
             this._mapper = mapper;
         }
 
+        //TODO!: unify return type for all methdods
+
         //(3) Be able to query all available products, across stores, with their total stock.
         //(5) Be able to query available products for a particular store
         [HttpGet()]
