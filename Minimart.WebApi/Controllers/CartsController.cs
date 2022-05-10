@@ -66,13 +66,40 @@ namespace Minimart.WebApi.Controllers
         [HttpDelete("{id:guid}/items/{productId:int}")]
         public async Task<IActionResult> RemoveItem( [FromRoute] Guid id, [FromRoute] int productId)
         {
-            
-            var result = await _cartService.RemoveItem(id, productId);
 
-            if (!result.Success)
-                return BadRequest(result.Message);
+            try
+            {
+                var result = await _cartService.RemoveItem(id, productId);
 
-            return NoContent();
+                if (!result.Success)
+                    return BadRequest(result.Message);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                //TODO!: log the ex.Message
+                return StatusCode(500, "Internal error!");
+            }
+        }
+
+        [HttpPut("{id:guid}/voucher/{voucherId}")]
+        public async Task<IActionResult> ApplyVoucher([FromRoute] Guid id, [FromRoute] string voucherId )
+        {
+            try
+            {
+                var result = await _cartService.ApplyVoucher(id, voucherId);
+
+                if (!result.Success)
+                    return BadRequest(result.Message);
+
+                return NoContent();
+            }
+            catch (Exception ex )
+            {
+                //TODO!: log the ex.Message
+                return StatusCode(500, "Internal error!");
+            }
         }
 
 

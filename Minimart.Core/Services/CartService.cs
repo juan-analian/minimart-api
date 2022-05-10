@@ -13,12 +13,15 @@ namespace Minimart.Core.Services
         private readonly IStoreRepository _storeRepository;
         private readonly IProductRepository _productRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly IVoucherRepository _voucherRepository;
 
-        public CartService(IStoreRepository storeRepository, IProductRepository productRepository, ICartRepository cartRepository)
+        public CartService(IStoreRepository storeRepository, IProductRepository productRepository, 
+                           ICartRepository cartRepository, IVoucherRepository voucherRepository)
         {
             this._storeRepository = storeRepository;
             this._productRepository = productRepository;
             this._cartRepository = cartRepository;
+            this._voucherRepository = voucherRepository;
         }
 
         public async Task<NewCartResponse> AddItem(Guid cartId, int productId, int quantity)
@@ -41,6 +44,23 @@ namespace Minimart.Core.Services
             await _cartRepository.AddOrUpdateItem(cartId, productId, quantity);
             return new NewCartResponse(cartId);
                 
+        }
+
+        public async Task<NewCartResponse> ApplyVoucher(Guid cartId, string voucherId)
+        {
+            //Find Cart Header to get the StoreId
+            var cart = await _cartRepository.FindById(cartId);
+            if (cart == null)
+                return new NewCartResponse($"CartId: '{cartId}' not found");
+
+            //Check if is a valida/existing voucher            
+            var voucher = await _voucherRepository.FindById(voucherId);
+            if (voucher == null )
+                return new NewCartResponse($"Voucher: '{voucherId}' is not valid");
+
+            await _cartRepository.ApplyVoucher(cartId, voucherId);
+            return new NewCartResponse(cartId);
+
         }
 
         public async Task<NewCartResponse> Create(int storeId, int productId, int quantity)

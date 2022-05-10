@@ -12,7 +12,8 @@ namespace Minimart.Core.Domain.Services
         public Task<NewCartResponse> Create(int storeId, int productId, int quantity);
 
         public Task<NewCartResponse> AddItem(Guid cartId, int productId, int quantity);
-        public Task<NewCartResponse> RemoveItem(Guid id, int productId);
+        public Task<NewCartResponse> RemoveItem(Guid cartId, int productId);
+        public Task<NewCartResponse> ApplyVoucher(Guid cartId, string voucherId);
     }
 
 }

@@ -48,6 +48,9 @@ namespace Minimart.WebApi
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<ICartRepository, CartRepository>();
 
+            services.AddScoped<IVoucherRepository, VoucherRepository>();
+            
+
             services.AddAutoMapper(typeof(ModelToResourceProfile));
            
         }

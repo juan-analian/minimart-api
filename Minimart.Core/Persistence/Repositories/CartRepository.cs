@@ -111,5 +111,18 @@ namespace Minimart.Core.Persistence.Repositories
             }
 
         }
+
+        public async Task ApplyVoucher(Guid cartId, string voucherId)
+        {
+            var query = "UPDATE [dbo].[Cart] SET [VoucherId] = @voucherId  WHERE Id = @cartId";
+            var parameters = new DynamicParameters();
+            parameters.Add("cartId", cartId, DbType.Guid);
+            parameters.Add("voucherId", voucherId, DbType.String);
+             
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
     }
 }
