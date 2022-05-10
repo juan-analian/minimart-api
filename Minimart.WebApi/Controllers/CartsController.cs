@@ -28,43 +28,60 @@ namespace Minimart.WebApi.Controllers
             _mapper = mapper;
         }
 
+        //TODO!: unify return type for all methdods
 
         [HttpPost()]
         public async Task<IActionResult> AddNewCart([FromBody] CartItemResource item, [FromHeader] int storeId)
         {
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessages());
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState.GetErrorMessages());
 
-            if (storeId == 0)
-                return BadRequest($"StoreId missing parameter");
+                if (storeId == 0)
+                    return BadRequest($"StoreId missing parameter");
 
-            var result = await _cartService.Create(storeId, item.ProductId, item.Quantity);
+                var result = await _cartService.Create(storeId, item.ProductId, item.Quantity);
 
-            if(!result.Success)
-                return BadRequest(result.Message);
+                if (!result.Success)
+                    return BadRequest(result.Message);
 
-            return Ok(new { Guid = result.Resource });
+                return Ok(new { Guid = result.Resource });
+            }
+            catch (Exception ex)
+            {
+                //TODO!: log the ex.Message
+                return StatusCode(500, "Internal error!");
+            }
         }
 
 
         [HttpPost("{id:guid}")]
         public async Task<IActionResult> AddItem([FromBody] CartItemResource item, [FromRoute] Guid id)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessages());
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState.GetErrorMessages());
 
-            var result = await _cartService.AddItem(id, item.ProductId, item.Quantity);
+                var result = await _cartService.AddItem(id, item.ProductId, item.Quantity);
 
-            if (!result.Success)
-                return BadRequest(result.Message);
+                if (!result.Success)
+                    return BadRequest(result.Message);
 
-            return Ok(new { Guid = result.Resource });
+                return Ok(new { Guid = result.Resource });
+            }
+            catch (Exception ex)
+            {
+                //TODO!: log the ex.Message
+                return StatusCode(500, "Internal error!");
+            }
         }
 
 
         [HttpDelete("{id:guid}/items/{productId:int}")]
-        public async Task<IActionResult> RemoveItem( [FromRoute] Guid id, [FromRoute] int productId)
+        public async Task<IActionResult> RemoveItem([FromRoute] Guid id, [FromRoute] int productId)
         {
 
             try
@@ -84,7 +101,7 @@ namespace Minimart.WebApi.Controllers
         }
 
         [HttpPut("{id:guid}/voucher/{voucherId}")]
-        public async Task<IActionResult> ApplyVoucher([FromRoute] Guid id, [FromRoute] string voucherId )
+        public async Task<IActionResult> ApplyVoucher([FromRoute] Guid id, [FromRoute] string voucherId)
         {
             try
             {
@@ -95,7 +112,7 @@ namespace Minimart.WebApi.Controllers
 
                 return NoContent();
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 //TODO!: log the ex.Message
                 return StatusCode(500, "Internal error!");

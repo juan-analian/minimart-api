@@ -48,8 +48,8 @@ namespace Minimart.WebApi.Controllers
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, ex.Message);
+                //TODO!: log error 
+                return StatusCode(500, "Internal error!");
             }
             
         }
