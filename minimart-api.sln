@@ -3,14 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimart.WebApi", "Minimart.WebApi\Minimart.WebApi.csproj", "{68596427-920F-43A8-B173-1E1ADE700819}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minimart.WebApi", "Minimart.WebApi\Minimart.WebApi.csproj", "{68596427-920F-43A8-B173-1E1ADE700819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimart.Core", "Minimart.Core\Minimart.Core.csproj", "{AFF95280-8892-4D8E-A26D-4273FBB5ECEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minimart.Core", "Minimart.Core\Minimart.Core.csproj", "{AFF95280-8892-4D8E-A26D-4273FBB5ECEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C4A9B5AB-6EDA-4127-A779-B3F2267FB275}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimart.Test", "Minimart.Test\Minimart.Test.csproj", "{EC6C8537-F8C7-4F7B-9FE8-5EB75F4ABD26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{AFF95280-8892-4D8E-A26D-4273FBB5ECEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFF95280-8892-4D8E-A26D-4273FBB5ECEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFF95280-8892-4D8E-A26D-4273FBB5ECEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC6C8537-F8C7-4F7B-9FE8-5EB75F4ABD26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC6C8537-F8C7-4F7B-9FE8-5EB75F4ABD26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC6C8537-F8C7-4F7B-9FE8-5EB75F4ABD26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC6C8537-F8C7-4F7B-9FE8-5EB75F4ABD26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

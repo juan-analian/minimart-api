@@ -151,7 +151,7 @@ namespace Minimart.Core.Services
                         break;
                 }
 
-                //assign the right logig
+                //assign the right logic
                 var context = new DiscountContext(strategy);
 
                 //execute the discount logic
