@@ -5,6 +5,7 @@ using Minimart.Core.Domain.Models;
 using Minimart.Core.Domain.Services;
 using Minimart.Core.Resources;
 using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,11 +27,20 @@ namespace Minimart.WebApi.Controllers
             this._mapper = mapper;
         }
 
-        //TODO!: unify return type for all methdods
+         
 
         //(3) Be able to query all available products, across stores, with their total stock.
         //(5) Be able to query available products for a particular store
+
+        /// <summary>
+        /// Get all products 
+        /// </summary>
+        /// <param name="storeId">(filter) to get all products from that store with its stock</param>
+        /// <returns>List of products with the current stock</returns>
         [HttpGet()]
+        [ProducesResponseType(typeof(ProductResource), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetProducts([FromQuery] int? storeId)
         {
             
@@ -52,7 +62,7 @@ namespace Minimart.WebApi.Controllers
                 }
                 else
                 {
-                    //obtain all products from all stores
+                    //obtain all products from all stores (and the stock quantity)
                     result = await _productService.ListAsync();
                 }
 
@@ -69,7 +79,16 @@ namespace Minimart.WebApi.Controllers
 
 
         // (4) Be able to query if a product is available, at a certain store, and return that product's info
+        /// <summary>
+        /// Get single product from a store (with its stock)
+        /// </summary>
+        /// <param name="productId">product identifier</param>
+        /// <param name="storeId">store identifier</param>
+        /// <returns>Product info</returns>
         [HttpGet("{productId:int}/stores/{storeId:int}")]
+        [ProducesResponseType(typeof(ProductResource), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetProductFromStore([FromRoute] int productId, [FromRoute] int storeId)
         {
 

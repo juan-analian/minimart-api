@@ -15,8 +15,10 @@ using Minimart.Core.Services;
 using Minimart.Core.Persistence.Context;
 using Minimart.Core.Domain.Repositories;
 using Minimart.Core.Persistence.Repositories;
-using AutoMapper;
 using Minimart.WebApi.Mapping;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.IO;
 
 namespace Minimart.WebApi
 {
@@ -49,8 +51,28 @@ namespace Minimart.WebApi
             services.AddScoped<ICartRepository, CartRepository>();
 
             services.AddScoped<IVoucherRepository, VoucherRepository>();
-            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Minimart API",
+                    Description = "A simple example of a rest web api",
+                    
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Juan Pablo",
+                        Email = string.Empty,
+                        Url = new Uri("https://twitter.com/@juan_analian"),
+                    } 
+                });
 
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
+            });
             services.AddAutoMapper(typeof(ModelToResourceProfile));
            
         }
@@ -64,6 +86,13 @@ namespace Minimart.WebApi
             }
 
             app.UseHttpsRedirection();
+
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.)
+            app.UseSwaggerUI();
 
             app.UseRouting();
 

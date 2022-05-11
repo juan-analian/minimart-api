@@ -8,6 +8,7 @@ using Minimart.WebApi.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Minimart.WebApi.Controllers
@@ -31,7 +32,17 @@ namespace Minimart.WebApi.Controllers
 
         //TODO!: unify return type for all methdods
 
+
+        /// <summary>
+        /// Create a new cart and return the guid to add more items (update the stock)
+        /// </summary>
+        /// <param name="item">productId and quantity</param>
+        /// <param name="storeId">store asociated to this cart</param>
+        /// <returns>guid for the cart</returns>
         [HttpPost()]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> AddNewCart([FromBody] CartItemSaveResource item, [FromHeader] int storeId)
         {
 
@@ -57,8 +68,16 @@ namespace Minimart.WebApi.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Add an item to an existing cart (update the stock)
+        /// </summary>
+        /// <param name="item">productId and quantity (if the product exists, quantities are added)</param>
+        /// <param name="id">guid returned in the initial post </param>
+        /// <returns>the same guid for the cart</returns>
         [HttpPost("{id:guid}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> AddItem([FromBody] CartItemSaveResource item, [FromRoute] Guid id)
         {
             try
@@ -80,8 +99,16 @@ namespace Minimart.WebApi.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Delete an item for this cart (update the stock)
+        /// </summary>
+        /// <param name="id">cart guid</param>
+        /// <param name="productId">productId to remove from the cart</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}/items/{productId:int}")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> RemoveItem([FromRoute] Guid id, [FromRoute] int productId)
         {
 
@@ -101,7 +128,16 @@ namespace Minimart.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// This method apply an existing voucher to the cart.
+        /// </summary>
+        /// <param name="id">cart guid</param>
+        /// <param name="voucherId">voucher id</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}/voucher/{voucherId}")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> ApplyVoucher([FromRoute] Guid id, [FromRoute] string voucherId)
         {
             try
@@ -121,8 +157,15 @@ namespace Minimart.WebApi.Controllers
         }
 
 
-
+        /// <summary>
+        /// retrieve all items from the cart and calculate the voucher discount (if apply)
+        /// </summary>
+        /// <param name="id">cart guid</param>
+        /// <returns>list of products with their price, quantity and the total amount</returns>
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(CartResource), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetCart([FromRoute] Guid id)
         {
             try

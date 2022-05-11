@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Minimart.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Minimart.WebApi.Controllers.CartsController.AddNewCart(Minimart.Core.Resources.CartItemSaveResource,System.Int32)">
+            <summary>
+            Create a new cart and return the guid to add more items (update the stock)
+            </summary>
+            <param name="item">productId and quantity</param>
+            <param name="storeId">store asociated to this cart</param>
+            <returns>guid for the cart</returns>
+        </member>
+        <member name="M:Minimart.WebApi.Controllers.CartsController.AddItem(Minimart.Core.Resources.CartItemSaveResource,System.Guid)">
+            <summary>
+            Add an item to an existing cart (update the stock)
+            </summary>
+            <param name="item">productId and quantity (if the product exists, quantities are added)</param>
+            <param name="id">guid returned in the initial post </param>
+            <returns>the same guid for the cart</returns>
+        </member>
+        <member name="M:Minimart.WebApi.Controllers.CartsController.RemoveItem(System.Guid,System.Int32)">
+            <summary>
+            Delete an item for this cart (update the stock)
+            </summary>
+            <param name="id">cart guid</param>
+            <param name="productId">productId to remove from the cart</param>
+            <returns></returns>
+        </member>
+        <member name="M:Minimart.WebApi.Controllers.CartsController.ApplyVoucher(System.Guid,System.String)">
+            <summary>
+            This method apply an existing voucher to the cart.
+            </summary>
+            <param name="id">cart guid</param>
+            <param name="voucherId">voucher id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Minimart.WebApi.Controllers.CartsController.GetCart(System.Guid)">
+            <summary>
+            retrieve all items from the cart and calculate the voucher discount (if apply)
+            </summary>
+            <param name="id">cart guid</param>
+            <returns>list of products with their price, quantity and the total amount</returns>
+        </member>
+        <member name="M:Minimart.WebApi.Controllers.ProductsController.GetProducts(System.Nullable{System.Int32})">
+            <summary>
+            Get all products 
+            </summary>
+            <param name="storeId">(filter) to get all products from that store with its stock</param>
+            <returns>List of products with the current stock</returns>
+        </member>
+        <member name="M:Minimart.WebApi.Controllers.ProductsController.GetProductFromStore(System.Int32,System.Int32)">
+            <summary>
+            Get single product from a store (with its stock)
+            </summary>
+            <param name="productId">product identifier</param>
+            <param name="storeId">store identifier</param>
+            <returns>Product info</returns>
+        </member>
+        <member name="M:Minimart.WebApi.Controllers.StoresController.GetStores(System.Nullable{System.Int32},System.Nullable{System.Byte})">
+            <summary>
+            Get available stores (at a certain time in the day) and return only those that are open
+            </summary>
+            <param name="atHour">Filter: specify an hour of the day (betwwn 0 -23) that the stores are open</param>
+            <param name="weekDay">Filter: specify a week day that the stores are open (1-monday to 7-sunday)</param>
+            <returns>List of stores with their open days</returns>
+        </member>
+    </members>
+</doc>

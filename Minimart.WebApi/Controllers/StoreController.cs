@@ -27,23 +27,25 @@ namespace Minimart.WebApi.Controllers
             this._mapper = mapper;
         }
 
-        //TODO!: unify return type for all methdods
-
+         
         //(1) Be able to query available stores at a certain time in the day and return only those that apply
+        /// <summary>
+        /// Get available stores (at a certain time in the day) and return only those that are open
+        /// </summary>
+        /// <param name="atHour">Filter: specify an hour of the day (betwwn 0 -23) that the stores are open</param>
+        /// <param name="weekDay">Filter: specify a week day that the stores are open (1-monday to 7-sunday)</param>
+        /// <returns>List of stores with their open days</returns>
         [Description("Gets Stores. You can query at specific hour and/or weekday")]
         [HttpGet()]
-        //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(StoreResource, (int)HttpStatusCode.InternalServerError)]        
-        public async Task<IActionResult> GetStores( 
-            [Description("Get stores opeded at this hour of the day (from 0 to 23)")] [FromQuery] int? atHour,
-            [Description("Get stores opeded in this weekday (1=monday to 7=sunday)")][FromQuery] byte? weekDay )
+        [ProducesResponseType(typeof(StoreResource), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]        
+        public async Task<IActionResult> GetStores([FromQuery] int? atHour, [FromQuery] byte? weekDay )
         {
             try
             {
                 var stores = await _storeService.ListAsync(atHour, weekDay);
                 var resources = _mapper.Map<IEnumerable<Store>, IEnumerable<StoreResource>>(stores);
-
-                //return Ok(stores);
+               
                 return Ok(resources);
             }
             catch (Exception ex)
