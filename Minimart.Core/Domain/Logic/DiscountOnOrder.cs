@@ -32,9 +32,9 @@ namespace Minimart.Core.Domain.Logic
                 //if this item apply for this voucher discount
                 if (this.products.Contains(item.ProductId) && item.Quantity >= _voucher.UnitOrder.Value)
                 {
-                    var amount = (item.Price * item.Quantity);
+                    var amount = item.Price * (item.Quantity - 1);
                     var discount = ((_voucher.Percent ?? 0) / (decimal)100); //if Percent = 20, then discount is = 0.2
-                    item.TotalWithDiscount = amount - (item.Price * discount); //discount on the Nth. unit (1 unit)
+                    item.TotalWithDiscount = amount + (item.Price * discount); //discount in 1 unit
                 }
             }
 
