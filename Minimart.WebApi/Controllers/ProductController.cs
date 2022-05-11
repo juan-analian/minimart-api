@@ -42,7 +42,7 @@ namespace Minimart.WebApi.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetProducts([FromQuery] int? storeId)
-        {
+        { 
             
             try
             {
