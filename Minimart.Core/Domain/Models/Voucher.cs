@@ -23,7 +23,7 @@ namespace Minimart.Core.Domain.Models
         public int? TakeUnits { get; set; }
         public int? PayUnits { get; set; }
 
-        public List<VoucherIncludeCategory> Categories { get; set; } = new List<VoucherIncludeCategory>();
+        public List<VoucherIncludeCategory> IncludedCategories { get; set; } = new List<VoucherIncludeCategory>();
         public List<VoucherIncludeProduct> IncludedProducts { get; set; } = new List<VoucherIncludeProduct>();
         public List<VoucherExcludeProduct> ExcludedProducts { get; set; } = new List<VoucherExcludeProduct>();
         public List<VoucherWeekDay> WeekDays { get; set; } = new List<VoucherWeekDay>();

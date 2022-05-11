@@ -44,7 +44,7 @@ namespace Minimart.Core.Persistence.Repositories
                 //collections
                 voucher.IncludedProducts  = (await multi.ReadAsync<VoucherIncludeProduct>()).ToList();
                 voucher.ExcludedProducts = (await multi.ReadAsync<VoucherExcludeProduct>()).ToList();
-                voucher.Categories = (await multi.ReadAsync<VoucherIncludeCategory>()).ToList();
+                voucher.IncludedCategories = (await multi.ReadAsync<VoucherIncludeCategory>()).ToList();
                 voucher.WeekDays = (await multi.ReadAsync<VoucherWeekDay>()).ToList();
 
                 return voucher;
