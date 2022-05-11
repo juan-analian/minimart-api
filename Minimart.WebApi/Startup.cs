@@ -16,7 +16,7 @@ using Minimart.Core.Persistence.Context;
 using Minimart.Core.Domain.Repositories;
 using Minimart.Core.Persistence.Repositories;
 using AutoMapper;
-using Minimart.Core.Mapping;
+using Minimart.WebApi.Mapping;
 
 namespace Minimart.WebApi
 {

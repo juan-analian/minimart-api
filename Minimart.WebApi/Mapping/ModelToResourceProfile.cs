@@ -3,11 +3,13 @@ using Minimart.Core.Domain.Models;
 using Minimart.Core.Resources;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Minimart.Core.Mapping
+namespace Minimart.WebApi.Mapping
 {
-    public class ModelToResourceProfile: Profile
+     
+    public class ModelToResourceProfile : Profile
     {
         public ModelToResourceProfile()
         {
