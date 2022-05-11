@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Minimart.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,21 @@ namespace Minimart.WebApi.Controllers
     [ApiController]
     public class SetupController : ControllerBase
     {
-        [HttpGet()]        
+        SetupService _setupService;
+
+        public SetupController(IConfiguration configuration)
+        {
+            _setupService = new SetupService(configuration);
+        }
+
+        /// <summary>
+        /// Initial setup! please change the connection string from the appsettings.json file. This will delete and create tables and data.
+        /// </summary>
+        /// <returns>log list</returns>
+        [HttpGet()]
         public async Task<IActionResult> Setup()
         {
-            return Ok(new { msg= "setup pending ..."});
+            return Ok(await _setupService.CreateObjects());
         }
     }
 }

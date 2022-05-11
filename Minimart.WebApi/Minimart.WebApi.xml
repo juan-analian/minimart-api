@@ -58,6 +58,12 @@
             <param name="storeId">store identifier</param>
             <returns>Product info</returns>
         </member>
+        <member name="M:Minimart.WebApi.Controllers.SetupController.Setup">
+            <summary>
+            Initial setup! please change the connection string from the appsettings.json file. This will delete and create tables and data.
+            </summary>
+            <returns>log list</returns>
+        </member>
         <member name="M:Minimart.WebApi.Controllers.StoresController.GetStores(System.Nullable{System.Int32},System.Nullable{System.Byte})">
             <summary>
             Get available stores (at a certain time in the day) and return only those that are open

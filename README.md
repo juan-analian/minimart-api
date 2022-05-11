@@ -31,12 +31,9 @@ This end point create the required tables and insert initial data.
 ## API documentation
 https://localhost:44366/swagger
 
-### Assumptions: 
+## DER
+https://raw.githubusercontent.com/juan-analian/minimart-api/main/der.png
  
-
-
-
-
 
 ## TODO!: (pendings)
 Paging, sorting and filtering lists.
