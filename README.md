@@ -25,22 +25,22 @@ Open the solution in Visual Studio and run the project (web.api) with IIS Expres
 Open the browser and navigate to this url: https://localhost:44366/swagger/
 
 ### 4.Initial Setup
-Call the api with a GET verb to this resource: /api/setup  
+Call the api with a GET verb to this resource: /setup  
 This end point create the required tables and insert initial data.
 
 ## API documentation
-https://localhost:44366/swagger
+/swagger
 
 ## DER
 https://raw.githubusercontent.com/juan-analian/minimart-api/main/der.png
  
 
 ## TODO!: (pendings)
-Paging, sorting and filtering lists.
-Add logs in catch blocks
-Controllers: unify return types for all methods
-Controllers: create a BaseController to define route versioning /v1/api/*
-Controllers: change response type when ModelState is not valid
-Add authentication
-Compleete Unit Test: for Cart Controler 
-Compleete Unit Test: for Cart Services
+* Paging, sorting and filtering lists.
+* Add logs in catch blocks
+* Controllers: unify return types for all methods
+* Controllers: create a BaseController to define route versioning /v1/api/*
+* Controllers: change response type when ModelState is not valid
+* Add authentication
+* Compleete Unit Test: for Cart Controler 
+* Compleete Unit Test: for Cart Services
