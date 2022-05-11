@@ -32,7 +32,7 @@ namespace Minimart.Core.Domain.Logic
                     !this.excludedProducts.Contains(item.ProductId))
                 {
                     var amount = (item.Price * item.Quantity);
-                    var discount = ((_voucher.Percent ?? 0) / 100); //if Percent = 20, then discount is = 0.2
+                    var discount = (_voucher.Percent ?? 0) / (decimal)100; //if Percent = 20, then discount is = 0.2
                     item.TotalWithDiscount = amount - (amount * discount);
                 }
             }

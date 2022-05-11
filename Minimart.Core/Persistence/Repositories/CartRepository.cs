@@ -134,7 +134,7 @@ namespace Minimart.Core.Persistence.Repositories
             var query = @"select 
                             c.[Id],c.[StoreId],c.[CreatedAt],c.[VoucherId] ,
                             s.Id, s.Name, 
-                            i.Id, i.CartId, i.ProductId, p.CategoryId, i.Quantity, i.CreatedAt,
+                            i.Id, i.CartId, i.ProductId, p.CategoryId, p.Price, i.Quantity, i.CreatedAt,
                             p.Id, p.Name, p.Price , p.CategoryId
                         from Cart c 
                         join Store s on c.StoreId = s.Id

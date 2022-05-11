@@ -8,7 +8,11 @@ namespace Minimart.Core.Domain.Logic
 
     public class DiscountPerProduct : BaseDiscount, IDiscountStrategy
     {
-        public DiscountPerProduct(Voucher voucher) : base(voucher) { }
+        public DiscountPerProduct(Voucher voucher) : base(voucher) 
+        {
+            if (_voucher.Percent == null)
+                throw new ArgumentNullException("Voucher.Percent must be defined");        
+        }
 
         public Cart Apply(Cart cart, DateTime? date)
         {
@@ -26,7 +30,7 @@ namespace Minimart.Core.Domain.Logic
                 if (this.products.Contains(item.ProductId))
                 {
                     var amount = (item.Price * item.Quantity);
-                    var discount = ((_voucher.Percent ?? 0) / 100); //if Percent = 20, then discount is = 0.2
+                    var discount = ((_voucher.Percent ?? 0) / (decimal)100); //if Percent = 20, then discount is = 0.2
                     item.TotalWithDiscount = amount - (amount * discount);
                 }
             }

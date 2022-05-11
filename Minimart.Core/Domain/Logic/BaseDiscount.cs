@@ -53,9 +53,13 @@ namespace Minimart.Core.Domain.Logic
 
         internal bool isValidaWeekDay(DateTime date)
         {
+            //if there is no week day, we don't need to control.
+            if (_voucher.WeekDays.Count == 0)
+                return true;
+
             //.Net start with: Sunday = 0 to Saturday = 6
             //We are storing in our SQL: Monday as 1 to Sunday as 7
-            var weekDay = date.DayOfWeek == 0 ? 7 : (int)date.DayOfWeek;
+                var weekDay = date.DayOfWeek == 0 ? 7 : (int)date.DayOfWeek;
 
             return _voucher.WeekDays.Any(w => (int)w.WeekDay == weekDay);            
         }

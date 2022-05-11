@@ -28,18 +28,22 @@ namespace Minimart.Core.Domain.Logic
             foreach (var item in cart.items)
             {
                 
-                if (this.products.Contains(item.ProductId) && item.Quantity > _voucher.TakeUnits)
+                if (this.products.Contains(item.ProductId) && item.Quantity >= _voucher.TakeUnits)
                 {
-                    //quantity of products discounted! 
-                    //if we have 6 items and the promo is take 3 pay 2, then count = 2
-                    //if we have 4 items and the promo is take 3 pay 2, then count = 1
+                     
+                    //TAKE 3 pay 2 
                     var take = _voucher.TakeUnits;
+                    //take 3 PAY 2
                     var pay = _voucher.PayUnits;
+                    //take 3 pay 2 up to LIMIT products
                     var limit = _voucher.UpToUnit;
 
+                    //if quantity = 100 and limit = 18 => outOfPromo = 82
                     var outOfPromo = item.Quantity > limit ? item.Quantity - limit: 0;
+                    //if quantity = 100 and limit = 18 => inPromo = 18
                     var inPromo = item.Quantity - outOfPromo;
 
+                    //groups
                     var packs = inPromo / take;
 
                     var subTotalInPromo = packs * (item.Price * pay);
