@@ -3,13 +3,13 @@
 
 ## Functional requirements
 The system should:
-• Be able to setup all data from a simple GET
-• Be able to query available stores at a certain time in the day and return only those that apply 
-• Be able to query all available products, across stores, with their total stock.
-• Be able to query if a product is available, at a certain store, and return that product's info
-• Be able to query available products for a particular store
-• Be able to manage a simple virtual cart (add/remove from it). It cannot allow to add a product that has NO stock
-• Be able to check the validity of a Voucher code on said virtual cart. Calculate discounts and return both original and discounted prices
+* Be able to setup all data from a simple GET
+* Be able to query available stores at a certain time in the day and return only those that apply 
+* Be able to query all available products, across stores, with their total stock.
+* Be able to query if a product is available, at a certain store, and return that product's info
+* Be able to query available products for a particular store
+* Be able to manage a simple virtual cart (add/remove from it). It cannot allow to add a product that has NO stock
+* Be able to check the validity of a Voucher code on said virtual cart. Calculate discounts and return both original and discounted prices
 
 ## Requirements to run the project
 * net core 3.1 sdk
