@@ -20,6 +20,7 @@ namespace Minimart.Core.Persistence.Repositories
             this._context = context;
         }
 
+        //create the "header" and insert the "detail" for a nuew cart. This method handles the transaction
         public async Task<Guid> Create(int storeId, int productId, int quantity)
         {
             var guid = Guid.NewGuid();
@@ -62,6 +63,7 @@ namespace Minimart.Core.Persistence.Repositories
             return guid;
         }
 
+        //insert the the item and discount the stock of the product. The stored procedure handles transaction 
         public async Task AddOrUpdateItem(Guid cartId, int productId, int quantity)
         {
             var procedureName = "dbo.CartItemAdd";
@@ -79,6 +81,7 @@ namespace Minimart.Core.Persistence.Repositories
              
         }
 
+        //Fill only the "Cart" object (no related objects)
         public async Task<Cart> FindById(Guid id)
         {
             var query = "SELECT * FROM Cart WHERE [Id] = @guid";
@@ -101,6 +104,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
+        //delete the row and update (restore) the stock of the product. The stored procedure handles transaction 
         public async Task RemoveItem(Guid cartId, int productId )
         {
             var procedureName = "dbo.CartItemRemove";
@@ -115,6 +119,7 @@ namespace Minimart.Core.Persistence.Repositories
 
         }
 
+        //just update the cart table with the new vocherid
         public async Task ApplyVoucher(Guid cartId, string voucherId)
         {
             var query = "UPDATE [dbo].[Cart] SET [VoucherId] = @voucherId  WHERE Id = @cartId";
@@ -128,7 +133,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
-        //load full object with related objects an collections
+        //load full object with related items objects in an collections
         public async Task<Cart> GetCart(Guid id)
         {
             var query = @"select 

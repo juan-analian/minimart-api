@@ -30,6 +30,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
+        //get al properties for a voucher
         public async Task<Voucher> Get(string id)
         {
             var query = "select * from Voucher where Id = @voucherId; " +

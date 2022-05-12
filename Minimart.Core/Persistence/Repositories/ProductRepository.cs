@@ -16,6 +16,8 @@ namespace Minimart.Core.Persistence.Repositories
         {
             this._context = context;
         }
+
+        //Get all products with related category object, for a specific store with the stock
         public async Task<List<Product>> GetProductsByStoreId(int storeId)
         {
             var query = @"select p.Id, p.Name, p.Price, sum(isnull(s.Quantity,0)) as Stock, p.CategoryId, c.Id, c.Name
@@ -46,6 +48,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
+        //Get all products with related category object, for all stores with the stock
         public async Task<List<Product>> GetProducts()
         {
             var query = @"select p.Id, p.Name, p.Price, sum(isnull(s.Quantity,0)) as Stock, p.CategoryId, c.Id, c.Name
@@ -75,6 +78,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
+        //Get a product with related category object and stock
         public async Task<Product> FindById(int id)
         {
             var query = @"select p.Id, p.Name, p.Price, sum(isnull(s.Quantity,0)) as Stock, p.CategoryId, c.Id, c.Name
@@ -91,6 +95,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
+        //Get a product with related category object and stock for a specific store
         public async Task<Product> FindByIdAndStore(int id, int storeId)
         {
             var query = @"select p.Id, p.Name, p.Price, sum(isnull(s.Quantity,0)) as Stock, p.CategoryId

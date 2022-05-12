@@ -19,6 +19,7 @@ namespace Minimart.Core.Persistence.Repositories
             this._context = context;
         }
 
+        //Get all stores with related open days collection, filtered by hour and/or weekday
         public async Task<IEnumerable<Store>> GetStores(int? hour, byte? weekday)
         {
             var query = @"select s.Id, s.[Name], s.[address], o.Id, o.StoreId, o.[WeekDay], 
@@ -57,7 +58,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
-
+        //get only store entity without related open days collection
         public async Task<Store> FindById(int id)
         {
             var query = "SELECT * FROM Store WHERE Id = @storeId";
@@ -68,6 +69,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
+        //Get a list of stores without related open days collection
         public async Task<IEnumerable<Store>> GetStoresOnly()
         {
             var query = "SELECT * FROM Store";
@@ -78,7 +80,7 @@ namespace Minimart.Core.Persistence.Repositories
             }
         }
 
-
+        //Get all stores with related open days collection
         public async Task<IEnumerable<Store>> GetStores()
         {
             var query = @"select s.Id, s.[Name], s.[address], o.Id, o.StoreId, o.[WeekDay], 
