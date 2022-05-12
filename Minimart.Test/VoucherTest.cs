@@ -13,7 +13,7 @@ namespace Minimart.Test
     {
         
         [Fact]
-        public void Voucher_doesnot_apply_for_out_of_date()
+        public void Voucher_doesnot_apply_out_of_date()
         {
             //20% off on Wednesdays and Thursdays, on Cleaning products, from Jan 27th to Feb 13th
             var voucher = VoucherHelper.GetById("COCO1V1F8XOG1MZZ");
@@ -34,7 +34,7 @@ namespace Minimart.Test
         }
 
         [Fact]
-        public void Voucher_doesnot_apply_for_different_weekdate()
+        public void Voucher_doesnot_apply_different_weekdate()
         {
             //20% off on Wednesdays and Thursdays, on Cleaning products, from Jan 27th to Feb 13th
             var voucher = VoucherHelper.GetById("COCO1V1F8XOG1MZZ");
@@ -77,7 +77,7 @@ namespace Minimart.Test
         }
 
         [Fact]
-        public void Voucher_COCO1V1F8XOG1MZZ_doesnt_have_a_valid_category()
+        public void Voucher_COCO1V1F8XOG1MZZ_doesnot_apply_by_category()
         {
             //20% off on Wednesdays and Thursdays, on Cleaning products, from Jan 27th to Feb 13th
             var voucher = VoucherHelper.GetById("COCO1V1F8XOG1MZZ");
